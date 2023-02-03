@@ -4,7 +4,7 @@ import './App.css'
 function App() {
   const [image, setImage] = useState({ preview: '', data: '' })
   const [status, setStatus] = useState('');
-  const [path,setPath]=useState("");
+  const [paths,setPaths]=useState([]);
   const handleSubmit = async (e) => {
     e.preventDefault()
     let formData = new FormData()
@@ -16,11 +16,12 @@ function App() {
     const resdata= await response.json();
     console.log(resdata);
     if (response) setStatus(response.statusText);
-    setPath(resdata.originalname);
+    setPaths([...paths,resdata.originalname]);
   }
 
-  const handleDownload= async ()=>{
-    window.open(`http://localhost:8080/download?url=${path}`)
+  const handleDownload= async (item)=>{
+    window.open(`http://localhost:8080/download?url=${item}`)
+    // alert("download")
   }
 
   const handleFileChange = (e) => {
@@ -41,8 +42,17 @@ function App() {
         <button type='submit'>Submit</button>
       </form>
       {status && <h4>{status}</h4>}
-      <button type='button' onClick={handleDownload}>Download</button>
+      {/* <button type='button' onClick={handleDownload}>Download</button> */}
+      <div>
+        {
+          paths.map((item,index)=> ( <div className="FileList" key={index}>
+            <span className="FileName">{item}</span> <button type="button" onClick={(e)=>handleDownload(item)}>Download</button>
+          </div>)
+            )
+        }
+      </div>
     </div>
+    
   )
 }
 
