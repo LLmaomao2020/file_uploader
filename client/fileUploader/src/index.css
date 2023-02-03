@@ -66,4 +66,13 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+
+  .FileList{
+    margin-top: 20px;
+    display:flex;
+
+  }
+  .FileName{
+    margin-right: 20px;
+  }
 }
